@@ -1,0 +1,60 @@
+ #Git学习笔记
+ 
+ 
+ git remote add origin git@github.com:494189180/learngit.git      //本地关联远程库
+ git clone git@github.com:494189180/gitskills.git                 //从远程克隆
+ git push -u origin master                   //本地库的所有内容推送到远程库上(第一次推送加-u)
+ git remote -v                               //显示更详细的信息
+ git remote                                  //查看远程库的信息
+ git remote -v                               //查看远程库的详细信息
+ git remote rm origin                        //移除origin
+ git rebase                                  //分叉的提交历史"整理"成一条直线
+ 
+ git add readme.txt                          //添加文件到暂存区(stage)
+ git commit -m "biaojixinxi"                 //从stage提交到master(未add进stage的,不做提交)
+ git log --pretty=oneline                    //单行输出日志文件
+ git log                                     //输出日志文件
+ git reflog                                  //查看命令历史
+ git status                                  //查看当前状态
+ git reset --hard HEAD^                      //回退到上一个版本
+ git reset --hard HEAD^^                     //回退到上上个版本
+ git reset --hard HEAD~2                     //回退到上上个版本(同上)
+ git reset --hard 1094a                      //回退到指定的版本
+ cat readme.txt                              //查看文件信息
+ git diff HEAD -- readme.txt                 //查看工作区和版本库里面最新版本的区别
+ git checkout -- readme.txt                  //文件回到最近一次git commit或git add时的状态
+ git reset HEAD readme.txt                   //把暂存区的修改撤销掉(unstage)，重新放回工作区
+ git checkout -- readme.txt                  //丢弃工作区的修改
+ rm  readme.txt                              //删除文件管理器里的文件
+ git rm readme.txt                           //删除版本库里的文件(不用担心误删,但只能恢复文件到最新版本,最近一次提交后你修改的内容。)
+ git checkout -- readme.txt                  //把误删的文件恢复到最新版本
+#git checkout                                //其实是用版本库里的版本替换工作区的版本,无论工作区是修改还是删除
+ git checkout -b dev                         //创建dev分支，然后切换到dev分支.相当于git branch dev|git checkout dev
+ git branch                                  //查看当前分支
+ git checkout master                         //切换到master分支
+ git merge dev                               //dev分支合并到master
+ git merge --no-ff -m "merge with no-ff" dev //合并dev分支,请注意--no-ff参数，表示禁用Fast forward
+ git branch -d dev                           //删除dev分支
+ git branch -D dev                           //强制性删除dev分支
+ git log --graph                             //命令可以看到分支合并图
+ git stash                                   //当前工作现场"储藏"起来，等以后恢复现场后继续工作
+ git stash list                              //工作现场存到哪去了
+ git stash apply                             //恢复工作现场,stash内容并不删除
+ git stash drop                              //stash内容删除
+ git stash pop                               //恢复的同时把stash内容也删了
+ 
+ git tag v1.0                                //把标签打在最新提交的commit上的
+ git tag v0.9 f52c633                        //把标签打在commitid为f52c633上
+ git show v0.9                               //查看标签信息
+ git tag -a v0.1 -m "version 0.1 released" 1094adb   //用-a指定标签名,-m指定说明文字
+ git tag -d v0.1                             //删除标签
+ git push origin v1.0                        //推送某个标签到远程
+ git push origin --tags                      //推送全部尚未推送到远程的本地标签
+ git push origin :refs/tags/v0.9             //删除远程标签，但要先删除本地
+ 
+ 
+ 
+ 
+ 
+ 
+ 
