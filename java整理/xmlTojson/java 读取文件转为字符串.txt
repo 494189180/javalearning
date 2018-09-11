@@ -1,0 +1,21 @@
+public String getXmlString() {
+String xmlString;
+byte[] strBuffer = null;
+int flen = 0;
+File xmlfile = new File("/data/local/getHomePage.xml");
+try {
+InputStream in = new FileInputStream(xmlfile);
+flen = (int)xmlfile.length();
+strBuffer = new byte[flen];
+in.read(strBuffer, 0, flen);
+} catch (FileNotFoundException e) {
+// TODO Auto-generated catch block
+e.printStackTrace();
+} catch (IOException e) {
+// TODO Auto-generated catch block
+e.printStackTrace();
+}
+xmlString = new String(strBuffer); //构建String时，可用byte[]类型，
+
+return xmlString;
+}

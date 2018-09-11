@@ -1,0 +1,11 @@
+<MoBaoAccount MessageType="UserMobilePay" PlatformID="b2ctest">
+    <OrderNo>M20150521084825</OrderNo>
+    <TradeAmt>5000.00</TradeAmt>
+    <Commission>0.5</Commission>
+    <UserID>xiaolong</UserID>
+    <MerchID>xiaolong1</MerchID>
+    <tradeType>0</tradeType>
+    <CustParam>123</CustParam>
+    <NotifyUrl>http://mobaopay.com/callback.do</NotifyUrl>
+    <TradeSummary>鲜牛奶+++11</TradeSummary>
+</MoBaoAccount>
