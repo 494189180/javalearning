@@ -9,28 +9,7 @@
 	<name>XmlJson Maven Webapp</name>
 	<url>http://maven.apache.org</url>
 	<dependencies>
-	
-	<!-- https://mvnrepository.com/artifact/org.jdom/jdom -->
-<dependency>
-    <groupId>org.jdom</groupId>
-    <artifactId>jdom</artifactId>
-    <version>2.0.2</version>
-</dependency>
-	<!-- https://mvnrepository.com/artifact/com.alibaba/fastjson -->
-<dependency>
-    <groupId>com.alibaba</groupId>
-    <artifactId>fastjson</artifactId>
-    <version>1.1.36</version>
-</dependency>
-	
-	
-	
-		<dependency>
-			<groupId>junit</groupId>
-			<artifactId>junit</artifactId>
-			<version>3.8.1</version>
-			<scope>test</scope>
-		</dependency>
+
 		<dependency>
 			<groupId>net.sf.json-lib</groupId>
 			<artifactId>json-lib</artifactId>
@@ -42,13 +21,56 @@
 			<artifactId>xom</artifactId>
 			<version>1.2.5</version>
 		</dependency>
+		<!-- https://mvnrepository.com/artifact/net.sf.ezmorph/ezmorph -->
+
+		<!-- https://mvnrepository.com/artifact/org.dom4j/dom4j -->
+		<dependency>
+			<groupId>org.dom4j</groupId>
+			<artifactId>dom4j</artifactId>
+			<version>2.1.0</version>
+		</dependency>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+		<!-- https://mvnrepository.com/artifact/org.jdom/jdom -->
+		<dependency>
+			<groupId>org.jdom</groupId>
+			<artifactId>jdom</artifactId>
+			<version>2.0.2</version>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/com.alibaba/fastjson -->
+		<dependency>
+			<groupId>com.alibaba</groupId>
+			<artifactId>fastjson</artifactId>
+			<version>1.1.36</version>
+		</dependency>
+
+
 
 		<dependency>
-			<groupId>xom</groupId>
-			<artifactId>xom</artifactId>
-			<version>1.2.5</version>
-			<classifier>sources</classifier>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>3.8.1</version>
+			<scope>test</scope>
 		</dependency>
+
+
+
 
 
 

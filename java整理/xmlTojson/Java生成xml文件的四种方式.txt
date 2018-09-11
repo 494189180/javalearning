@@ -1,0 +1,323 @@
+一、Dom写入
+import java.io.File;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.transform.OutputKeys;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
+
+import org.junit.Test;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+
+public class DomXml {
+
+    @Test
+    public void test(){
+        Long start = System.currentTimeMillis();
+        createXml();
+        System.out.println("运行时间："+ (System.currentTimeMillis() - start));
+    }
+
+    /**
+     * 生成xml方法
+     */
+    public static void createXml(){
+        try {
+            // 创建解析器工厂          
+            DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+            DocumentBuilder db = factory.newDocumentBuilder();
+            Document document = db.newDocument();
+            // 不显示standalone="no"
+            document.setXmlStandalone(true);
+            Element bookstore = document.createElement("bookstore");
+            // 向bookstore根节点中添加子节点book
+            Element book = document.createElement("book");
+
+            Element name = document.createElement("name");
+            // 不显示内容 name.setNodeValue("不好使");
+            name.setTextContent("雷神");
+            book.appendChild(name);
+            // 为book节点添加属性
+            book.setAttribute("id", "1");
+            // 将book节点添加到bookstore根节点中
+            bookstore.appendChild(book);
+            // 将bookstore节点（已包含book）添加到dom树中
+            document.appendChild(bookstore);
+
+            // 创建TransformerFactory对象
+            TransformerFactory tff = TransformerFactory.newInstance();
+            // 创建 Transformer对象
+            Transformer tf = tff.newTransformer();
+
+            // 输出内容是否使用换行
+            tf.setOutputProperty(OutputKeys.INDENT, "yes");
+            // 创建xml文件并写入内容
+            tf.transform(new DOMSource(document), new StreamResult(new File("book1.xml")));
+            System.out.println("生成book1.xml成功");
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("生成book1.xml失败");
+        }       
+    }
+}
+
+三、Dom4j写入
+import java.io.File;
+import java.io.FileOutputStream;
+
+import org.dom4j.Document;
+import org.dom4j.DocumentHelper;
+import org.dom4j.Element;
+import org.dom4j.io.OutputFormat;
+import org.dom4j.io.XMLWriter;
+import org.junit.Test;
+
+public class Dom4jXml {
+
+    @Test
+    public void test(){
+        Long start = System.currentTimeMillis();
+        createXml();
+        System.out.println("运行时间："+ (System.currentTimeMillis() - start));
+    }
+
+    /**
+     * 生成xml方法
+     */
+    public static void createXml(){
+        try {
+            // 1、创建document对象
+            Document document = DocumentHelper.createDocument();
+            // 2、创建根节点rss
+            Element rss = document.addElement("rss");
+            // 3、向rss节点添加version属性
+            rss.addAttribute("version", "2.0");
+            // 4、生成子节点及子节点内容
+            Element channel = rss.addElement("channel");
+            Element title = channel.addElement("title");
+            title.setText("国内最新新闻");
+            // 5、设置生成xml的格式
+            OutputFormat format = OutputFormat.createPrettyPrint();
+            // 设置编码格式
+            format.setEncoding("UTF-8");
+
+
+            // 6、生成xml文件            
+            File file = new File("rss.xml");
+            XMLWriter writer = new XMLWriter(new FileOutputStream(file), format);
+            // 设置是否转义，默认使用转义字符
+            writer.setEscapeText(false);
+            writer.write(document);
+            writer.close();
+            System.out.println("生成rss.xml成功");
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("生成rss.xml失败");
+        }
+    }
+}
+
+三、jDom写入
+import java.io.File;
+import java.io.FileOutputStream;
+
+import org.jdom.Document;
+import org.jdom.Element;
+import org.jdom.output.Format;
+import org.jdom.output.XMLOutputter;
+import org.junit.Test;
+
+public class JDomXml {
+
+    @Test
+    public void test(){
+        Long start = System.currentTimeMillis();
+        createXml();
+        System.out.println("运行时间："+ (System.currentTimeMillis() - start));
+    }
+
+    /**
+     * 生成xml方法
+     */
+    public static void createXml(){
+        try {
+            // 1、生成一个根节点
+            Element rss = new Element("rss");
+            // 2、为节点添加属性
+            rss.setAttribute("version", "2.0");         
+            // 3、生成一个document对象
+            Document document = new Document(rss);
+
+            Element channel = new Element("channel");
+            rss.addContent(channel);
+            Element title = new Element("title");
+            title.setText("国内最新新闻");
+            channel.addContent(title);
+
+            Format format = Format.getCompactFormat();
+            // 设置换行Tab或空格
+            format.setIndent("  ");
+            format.setEncoding("UTF-8");
+
+            // 4、创建XMLOutputter的对象
+            XMLOutputter outputer = new XMLOutputter(format);
+            // 5、利用outputer将document转换成xml文档
+            File file = new File("rssNew.xml");
+            outputer.output(document, new FileOutputStream(file));
+
+            System.out.println("生成rssNew.xml成功");
+        } catch (Exception e) {
+            System.out.println("生成rssNew.xml失败");
+        }
+    }
+
+}
+
+四、Sax写入
+import java.io.File;
+import java.io.FileOutputStream;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.xml.transform.OutputKeys;
+import javax.xml.transform.Result;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.sax.SAXTransformerFactory;
+import javax.xml.transform.sax.TransformerHandler;
+import javax.xml.transform.stream.StreamResult;
+
+import org.junit.Test;
+import org.xml.sax.helpers.AttributesImpl;
+
+public class SaxXml {
+
+    @Test
+    public void test(){
+        List<Book> bList = new ArrayList<Book>();
+        Book b = new Book();
+        b.setName("冰与火之歌");
+        b.setAuthor("乔治马丁");
+        b.setId("1");
+        b.setLanguage("English");
+        b.setPrice("86");
+        b.setYear("2014");
+        bList.add(b);
+        Long start = System.currentTimeMillis();
+        createXml(bList);
+        System.out.println("运行时间："+ (System.currentTimeMillis() - start));
+    }
+
+    // 生成xml
+    public static void createXml(List<Book> bList){     
+        // 1、创建一个SAXTransformerFactory类的对象
+        SAXTransformerFactory tff = (SAXTransformerFactory) SAXTransformerFactory.newInstance();
+
+        try {
+            // 2、通过SAXTransformerFactory创建一个TransformerHandler的对象
+            TransformerHandler handler = tff.newTransformerHandler();
+            // 3、通过handler创建一个Transformer对象
+            Transformer tr = handler.getTransformer();
+            // 4、通过Transformer对象对生成的xml文件进行设置
+            // 设置编码方式
+            tr.setOutputProperty(OutputKeys.ENCODING, "UTF-8");
+            // 设置是否换行
+            tr.setOutputProperty(OutputKeys.INDENT, "yes");
+            // 5、创建一个Result对象
+            File f = new File("src/newbooks.xml");
+            // 判断文件是否存在
+            if(!f.exists()){
+                f.createNewFile();
+            }
+            Result result = new StreamResult(new FileOutputStream(f));
+            // 6、使RESULT与handler关联
+            handler.setResult(result);
+
+            // 打开document
+            handler.startDocument();
+            AttributesImpl attr = new AttributesImpl();         
+            handler.startElement("", "", "bookstore", attr);
+            attr.clear();
+
+            for (Book book : bList) {
+                attr.clear();
+                attr.addAttribute("", "", "id", "", book.getId());
+                handler.startElement("", "", "book", attr);
+
+                // 创建name
+                attr.clear();
+                handler.startElement("", "", "name", attr);
+                handler.characters(book.getName().toCharArray(), 0, book.getName().length());
+                handler.endElement("", "", "name");
+
+                // 创建year
+                attr.clear();
+                handler.startElement("", "", "year", attr);
+                handler.characters(book.getYear().toCharArray(), 0, book.getYear().length());
+                handler.endElement("", "", "year");
+
+                // 创建author
+                if(book.getAuthor() != null && !"".equals(book.getAuthor().trim())){
+                    attr.clear();
+                    handler.startElement("", "", "author", attr);
+                    handler.characters(book.getAuthor().toCharArray(), 0, book.getAuthor().length());
+                    handler.endElement("", "", "author");
+                }
+
+                // 创建price
+                if(book.getPrice() != null && !"".equals(book.getPrice().trim())){
+                    attr.clear();
+                    handler.startElement("", "", "price", attr);
+                    handler.characters(book.getPrice().toCharArray(), 0, book.getPrice().length());
+                    handler.endElement("", "", "price");
+                }
+
+                // 创建language
+                if(book.getLanguage() != null && !"".equals(book.getLanguage().trim())){
+                    attr.clear();
+                    handler.startElement("", "", "language", attr);
+                    handler.characters(book.getLanguage().toCharArray(), 0, book.getLanguage().length());
+                    handler.endElement("", "", "language");
+                }
+
+                handler.endElement("", "", "book");
+            }
+
+            handler.endElement("", "", "bookstore");
+            // 关闭document
+            handler.endDocument();
+            System.out.println("生成newbooks.xml成功");
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("生成newbooks.xml失败");
+        }
+    }
+}
+
+五、其它
+/**
+     * 四种方式总结
+     * 
+     * dom基于tree，sax基于事件，JDOM和DOM4J基于底层API
+     * 
+     * dom生成的内容会保存到内存中，方便删除和修改
+     * sax不能修改已经生成的标签
+     * 
+     * 添加JUnit在Libraries选择Add Library中的JUnit即可
+     * 
+     */
+
+
+
+
+
+
+
+
+
+
+
+
+
